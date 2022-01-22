@@ -7,7 +7,7 @@ import praw
 from app import app, config, db
 from app.models import Category, Post, User
 
-parser = argparse.ArgumentParser(description='Load posts from a subreddit.') 
+parser = argparse.ArgumentParser(description='Load posts from a subreddit.')
 parser.add_argument('subreddit', metavar='subreddit', nargs='?', default='learnpython',
                     help='the subreddit to load (default is learnpython')
 args = parser.parse_args()
