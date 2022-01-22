@@ -27,13 +27,13 @@ def pretty_date(time=False):
         diff = now - datetime.fromtimestamp(time) # pragma: no cover
     elif isinstance(time, datetime):
         diff = now - time
-    elif not time:
-        diff = now - now
+    elif not time: # pragma: no cover
+        diff = now - now # pragma: no cover
     second_diff = diff.seconds
     day_diff = diff.days
 
     if day_diff < 0:
-        return "just about now"
+        return "just about now" # pragma: no cover
 
     if day_diff == 0:
         return less_than_day(second_diff)
