@@ -24,7 +24,7 @@ def pretty_date(time=False):
     """
     now = datetime.utcnow()
     if type(time) is int:
-        diff = now - datetime.fromtimestamp(time)
+        diff = now - datetime.fromtimestamp(time) # pragma: no cover
     elif isinstance(time, datetime):
         diff = now - time
     elif not time:
