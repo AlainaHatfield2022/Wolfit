@@ -6,8 +6,8 @@ def test_now():
     assert (pretty_date(datetime.utcnow())) == "just now"
 
 
-#def not_time():
-    #assert pretty_date(timedelta(seconds=5) - datetime.utcnow()) == "just about now"
+def not_time():
+    assert pretty_date(datetime.utcnow() - timedelta(seconds=0)) == "just about now"
 
 
 def test_seconds_ago():
@@ -17,11 +17,14 @@ def test_seconds_ago():
 def test_minutes_ago():
     assert pretty_date(datetime.utcnow() - timedelta(minutes=35)) == "35 minutes ago"
 
+
 def test_one_hour():
-    assert pretty_date(datetime.utcnow() - timedelta(hours=1)) == "an hour ago" 
+    assert pretty_date(datetime.utcnow() - timedelta(hours=1)) == "an hour ago"
+
 
 def test_hours_ago():
     assert pretty_date(datetime.utcnow() - timedelta(hours=2)) == "2 hours ago"
+
 
 def test_a_minute_ago():
     assert pretty_date(datetime.utcnow() - timedelta(minutes=1)) == "a minute ago"
@@ -41,6 +44,7 @@ def test_weeks_ago():
 
 def test_months_ago():
     assert pretty_date(datetime.utcnow() - timedelta(days=60)) == "2 months ago"
+
 
 def test_years_ago():
     assert pretty_date(datetime.utcnow() - timedelta(days=365)) == "1 years ago"
