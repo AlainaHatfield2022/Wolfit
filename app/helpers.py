@@ -31,10 +31,8 @@ def pretty_date(time=False):
         diff = now - now # pragma: no cover
     second_diff = diff.seconds
     day_diff = diff.days
-
     if day_diff < 0:
         return "just about now" # pragma: no cover
-
     if day_diff == 0:
         return less_than_day(second_diff)
     if day_diff == 1:

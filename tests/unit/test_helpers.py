@@ -6,10 +6,6 @@ def test_now():
     assert (pretty_date(datetime.utcnow())) == "just now"
 
 
-def not_time():
-    assert pretty_date(datetime.utcnow() - timedelta(seconds=0)) == "just about now"
-
-
 def test_seconds_ago():
     assert pretty_date(datetime.utcnow() - timedelta(seconds=59)) == "59 seconds ago"
 
