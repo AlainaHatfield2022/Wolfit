@@ -78,10 +78,12 @@ def test_post_vote_count_goes_up_after_voting(client, test_user, single_post):
     single_post.up_vote(test_user)
     assert single_post.vote_count == 1
 
+
 def test_post_vote_count_goes_down_after_voting(client, test_user, single_post):
     assert single_post.vote_count == 0
     single_post.down_vote(test_user)
     assert single_post.vote_count == -1
+
 
 def test_a_user_can_only_vote_once(client, test_user, single_post):
     single_post.up_vote(test_user)
@@ -142,8 +144,8 @@ def test_comments_can_be_down_voted_on(client, test_user, single_post_with_comme
     # All comments start with a default vote count of 1
     assert comment.vote_count == 0
 
-def test_user_cannot_change_vote_count_for_own_comment(
-    client, test_user, single_post_with_comment):
+
+def test_user_cannot_change_vote_count_for_own_comment(client, test_user, single_post_with_comment):
     c = single_post_with_comment.comments[0]
     assert c.vote_count == 1
     c.up_vote(test_user)
