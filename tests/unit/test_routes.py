@@ -297,3 +297,16 @@ def test_link_posts_should_have_link_to_url(client, test_user):
     db.session.commit()
     response = client.get(url_for("post", post_id=link_post.id))
     assert link_post.url.encode() in response.data
+
+
+def test_ann_user_can_not_create_new_post(client):
+    response = client.post(
+        url_for("create_post"),
+    )
+    assert response.status_code == 302
+
+
+def test_registered_user_can_not_reregister(client, test_user, default_category):
+    login(client, test_user.username, PASSWORD)
+    response = client.get(url_for("register"))
+    assert response.status_code == 302
