@@ -131,7 +131,24 @@ def test_comments_can_be_voted_on(client, test_user, single_post_with_comment):
     db.session.add(new_user)
     db.session.commit()
     comment.up_vote(new_user)
-    # All comments start with a default vote count of 1
+    # All comef _new_user(url):
+    #     post_url = url + "/api/activities"
+    #     new_activity = {
+    #         "user_id": 9,
+    #         "username": "Paul",
+    #         "timestamp": str(datetime.utcnow()),
+    #         "details": "Paul is alive",
+    #     }
+    #     try:
+    #         r = requests.post(post_url, json=new_activity)
+    #         if r.status_code == 201:
+    #             print(f"Post new activity SUCCESS at {post_url}")
+    #             print(r.text)
+    #             print(json.loads(r.text))
+    #         else:
+    #             print(f"Post new activity FAILURE: {r.text}")
+    #     except requests.exceptions.RequestException:
+    #         print(f"Could not connect to activity log service at {url}")ments start with a default vote count of 1
     assert comment.vote_count == 2
 
 

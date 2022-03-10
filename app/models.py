@@ -1,5 +1,6 @@
 from datetime import datetime
 
+import requests
 from flask_login import UserMixin
 
 import markdown
@@ -171,26 +172,23 @@ class Comment(db.Model):
         db.session.commit()
 
 
-class ActivityLog(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    details = db.Column(db.Text)
+
 
     def __repr__(self):
         return f"<ActivityLog id {self.id} - {self.details[:20]}>" # pragma: no cover
 
     @classmethod
     def latest_entry(cls):
-        return cls.query.order_by(ActivityLog.id.desc()).first()
+        return requests.get()
 
     @classmethod
     def log_event(cls, user_id, details):
         e = cls(user_id=user_id, details=details)
-        db.session.add(e)
-        db.session.commit()
+        requests.post(e)
+        # db.session.add(e)
+        # db.session.commit()
 
 
 @login.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return requests.get("get_look_up_entry_by_id", user_id)
