@@ -131,17 +131,12 @@ class Category(UserMixin, db.Model):
 class ActivityLog:
     @classmethod
     def log_event(cls, user_id, details):
-        # e = cls(user_id=user_id, details=details)
-        # requests.post(e)
-        # db.session.add(e)
-        # db.session.commit()
         payload = {
             "user_id": user_id,
             "timestamp": str(datetime.utcnow()),
             "details": details,
         }
         try:
-            url = "http://192.168.40.53:8081/api/activities"
             post_url = "http://192.168.40.53:8081/api/activities"
             r = requests.post(post_url, json=payload)
             print(r.text)
@@ -153,7 +148,7 @@ class ActivityLog:
             else:
                 print(f"Post new activity FAILURE: {r.text}")
         except requests.exceptions.RequestException:
-            print(f"Could not connect to activity log service at {url}")
+            print(f"Could not connect to activity log service at {post_url}")
 
 
 class Comment(db.Model):

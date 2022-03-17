@@ -24,4 +24,7 @@ login = LoginManager(app)
 migrate = Migrate(app, db)
 bootstrap = Bootstrap(app)
 
+
 from app import models, routes
+
+
