@@ -1,12 +1,10 @@
 from datetime import datetime
-
 import requests
 from flask_login import UserMixin
 
 import markdown
-
 from werkzeug.security import check_password_hash, generate_password_hash
-
+import json
 from app import db, login
 from app.helpers import pretty_date
 
@@ -130,6 +128,34 @@ class Category(UserMixin, db.Model):
     )
 
 
+class ActivityLog:
+    @classmethod
+    def log_event(cls, user_id, details):
+        # e = cls(user_id=user_id, details=details)
+        # requests.post(e)
+        # db.session.add(e)
+        # db.session.commit()
+        payload = {
+            "user_id": user_id,
+            "timestamp": str(datetime.utcnow()),
+            "details": details,
+        }
+        try:
+            url = "http://192.168.40.53:8081/api/activities"
+            post_url = "http://192.168.40.53:8081/api/activities"
+            r = requests.post(post_url, json=payload)
+            print(r.text)
+            print(json.loads(r.text))
+            if r.status_code == 201:
+                print(f"Post new activity SUCCESS at {post_url}")
+                print(r.text)
+                print(json.loads(r.text))
+            else:
+                print(f"Post new activity FAILURE: {r.text}")
+        except requests.exceptions.RequestException:
+            print(f"Could not connect to activity log service at {url}")
+
+
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.Text)
@@ -143,7 +169,7 @@ class Comment(db.Model):
     )
 
     def __repr__(self):
-        return f"<Comment id {self.id} - {self.body[:20]}>" # pragma: no cover
+        return f"<Comment id {self.id} - {self.body[:20]}>"
 
     def pretty_timestamp(self):
         return pretty_date(self.timestamp)
@@ -174,21 +200,7 @@ class Comment(db.Model):
 
 
 
-    def __repr__(self):
-        return f"<ActivityLog id {self.id} - {self.details[:20]}>" # pragma: no cover
-
-    @classmethod
-    def latest_entry(cls):
-        return requests.get()
-
-    @classmethod
-    def log_event(cls, user_id, details):
-        e = cls(user_id=user_id, details=details)
-        requests.post(e)
-        # db.session.add(e)
-        # db.session.commit()
-
 
 @login.user_loader
 def load_user(user_id):
-    return requests.get("get_look_up_entry_by_id", user_id)
+    return User.query.get(int(user_id))
