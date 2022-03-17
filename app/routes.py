@@ -20,6 +20,7 @@ def greeting_name():
 def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
+        # need to call ActivityLog
         db.session.commit()
 
 
@@ -83,6 +84,7 @@ def create_post():
     if categories.count() == 0:
         category = Category(title="default")
         db.session.add(category)
+        # need to call ActivityLog
         db.session.commit()
         categories = Category.query.order_by("title")
     form.category_id.choices = [
@@ -100,6 +102,7 @@ def create_post():
             author=current_user,
         )
         db.session.add(post)
+        # need to call ActivityLog
         db.session.commit()
         ActivityLog.log_event(current_user.id, f"Create: {post}")
         flash("Your post is now live!")
@@ -121,6 +124,7 @@ def register():
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
         db.session.add(user)
+        # need to call ActivityLog
         db.session.commit()
         ActivityLog.log_event(user.id, "Register")
         flash("Congratulations, you are now a registered user!")
@@ -233,4 +237,3 @@ def down_vote_comment(comment_id):
 def shutdown():
     shutdown_server()
     return "Server shutting down..."
-
