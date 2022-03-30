@@ -124,7 +124,7 @@ def register():
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
         db.session.add(user)
-        # need to call ActivityLog
+        # need to call ActivityLog?
         db.session.commit()
         ActivityLog.log_event(user.id, "Register")
         flash("Congratulations, you are now a registered user!")
