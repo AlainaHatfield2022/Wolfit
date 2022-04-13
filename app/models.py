@@ -137,7 +137,7 @@ class ActivityLog:
             "details": details,
         }
         try:
-            post_url = "http://192.168.40.53:8081/api/activities"
+            post_url = "http://192.168.255.96:8081/api/activities"
             r = requests.post(post_url, json=payload)
             print(r.text)
             print(json.loads(r.text))
